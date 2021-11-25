@@ -15,11 +15,13 @@ except:
 gender = get_gender_from_name(name_to_classify='gaetan', names=names)
 
 # test data
-df = pd.DataFrame({'names': ["Alice", "Gaëtan", "Florian", "Clément", "Céline"]})
+df = pd.DataFrame({'firstnames': ["Alice", "Gaëtan", "Florian", "Clément", "Céline"]})
 
-prenoms_clean = TextPreprocessing(serie=df.names)
-df["prenoms_clean"] = prenoms_clean.lower().normalize().regex_cleaner().clean_whitespaces().serie
+# clean and normalize names
+firstnames_clean = TextPreprocessing(serie=df.firstnames)
+df["firstnames_clean"] = firstnames_clean.lower().normalize().regex_cleaner().clean_whitespaces().serie
 
-df["gender"] = df.prenoms_clean.apply(get_gender_from_name, names=names)
+# get gender from normalized names
+df["gender_from_name"] = df.firstnames_clean.apply(get_gender_from_name, names=names)
 
 print(df)
