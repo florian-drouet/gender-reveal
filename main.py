@@ -7,19 +7,19 @@ from func.text_preprocessing import TextPreprocessing
 insee_file = pd.read_csv("data/nat2020.csv", sep=';')
 
 try:
-    prenoms = pd.read_csv('data/prenoms.csv')
+    names = pd.read_csv('data/names.csv')
 except:
-    prenoms = clean_insee_file(insee_file=insee_file)
-    save_file(prenoms)
+    names = clean_insee_file(insee_file=insee_file)
+    save_file(names)
 
-gender = get_gender_from_name(name_to_classify='gaetan', names=prenoms)
+gender = get_gender_from_name(name_to_classify='gaetan', names=names)
 
 # test data
-df = pd.DataFrame({'prenoms': ["Alice", "Gaëtan", "Florian", "Clément", "Céline"]})
+df = pd.DataFrame({'names': ["Alice", "Gaëtan", "Florian", "Clément", "Céline"]})
 
-prenoms_clean = TextPreprocessing(serie=df.prenoms)
+prenoms_clean = TextPreprocessing(serie=df.names)
 df["prenoms_clean"] = prenoms_clean.lower().normalize().regex_cleaner().clean_whitespaces().serie
 
-df["gender"] = df.prenoms_clean.apply(get_gender_from_name, names=prenoms)
+df["gender"] = df.prenoms_clean.apply(get_gender_from_name, names=names)
 
 print(df)
