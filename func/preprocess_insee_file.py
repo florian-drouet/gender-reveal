@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from text_preprocessing import TextPreprocessing
+from func.text_preprocessing import TextPreprocessing
 
 
 def clean_insee_file(insee_file):
