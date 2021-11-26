@@ -12,8 +12,6 @@ except:
     names = clean_insee_file(insee_file=insee_file)
     save_file(names)
 
-gender = get_gender_from_name(name_to_classify='gaetan', names=names)
-
 # test data
 df = pd.DataFrame({'firstnames': ["Alice", "Gaëtan", "Florian", "Clément", "Céline"]})
 
@@ -22,6 +20,6 @@ firstnames_clean = TextPreprocessing(serie=df.firstnames)
 df["firstnames_clean"] = firstnames_clean.lower().normalize().regex_cleaner().clean_whitespaces().serie
 
 # get gender from normalized names
-df["gender_from_name"] = df.firstnames_clean.apply(get_gender_from_name, names=names)
+df["gender_from_name"] = df.firstnames_clean.apply(get_gender_from_name, threshold=95, names=names)
 
 print(df)
