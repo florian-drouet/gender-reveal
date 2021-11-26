@@ -3,6 +3,7 @@
 
 import pandas as pd
 
+
 def get_gender_from_name(
     name_to_classify: str, threshold: int, names: pd.DataFrame
 ) -> str:
