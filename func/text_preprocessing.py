@@ -17,6 +17,14 @@ class TextPreprocessing:
     def regex_cleaner(self):
         self.serie = self.serie.str.replace("[^\w\s]", " ", regex=True)
         return self
+    
+    @staticmethod
+    def nb_rmv(sentence):
+        return ''.join([character for character in sentence if not character.isdigit()])
+    
+    def numbers_remover(self):
+        self.serie = self.serie.apply(self.nb_rmv)
+        return self
 
     @staticmethod
     def cln_whtspcs(sentence):
