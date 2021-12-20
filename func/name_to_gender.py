@@ -14,3 +14,11 @@ def get_gender_from_name(
         return "female"
     else:
         return "unclear"
+
+def infer_gender_from_proba_columns(value: int) -> str:
+    if value > 0:
+        return 'male'
+    elif value < 0:
+        return 'female'
+    else:
+        return None

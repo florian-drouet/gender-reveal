@@ -1,7 +1,14 @@
-def get_firstname(sentence, names, names_threshold):
-    '''Returns the name found in a string. If no name found returns None'''
-    for firstname in names.loc[names.total>=names_threshold]["firstname"]:
+import pandas as pd
+
+def get_firstname(sentence: str, names: pd.DataFrame) -> str:
+    '''
+    First, check if the sentence has an equal matching firstname
+    If no equal matching, check if we can find a firstname in sentence
+    Returns: a firstname or None
+    '''
+    for firstname in names["firstname"]:
         if firstname == sentence:
             return firstname
-        elif firstname in sentence:
+    for firstname in names["firstname"]:
+        if firstname in sentence:
             return firstname

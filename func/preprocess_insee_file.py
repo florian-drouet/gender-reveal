@@ -41,9 +41,12 @@ def clean_insee_file(insee_file):
     )
 
     firstnames_clean["firstname_length"] = firstnames_clean.firstname.str.len()
-    firstnames_clean = firstnames_clean.loc[firstnames_clean.firstname_length>=3].dropna()
 
-    return firstnames_clean[["firstname", "firstname_length", "proba_man", "proba_female", "total"]].sort_values(by="total", ascending=False).reset_index(drop=True)
+    # Two parameters here : first_length min is set to 3 (no firstnames with less than 3 letters) and
+    # the 'popularity' of the firstname is set to at least 1000 occurences
+    firstnames_clean = firstnames_clean.loc[(firstnames_clean.firstname_length>=3) & (firstnames_clean.total>=1000)].dropna()
+
+    return firstnames_clean[["firstname", "firstname_length", "proba_man", "proba_female", "total"]].sort_values(by=["firstname_length", "total"], ascending=False).reset_index(drop=True)
 
 
 def save_file(file):
