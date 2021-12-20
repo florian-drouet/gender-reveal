@@ -17,6 +17,14 @@ class TextPreprocessing:
     def regex_cleaner(self):
         self.serie = self.serie.str.replace("[^\w\s]", " ", regex=True)
         return self
+    
+    @staticmethod
+    def nb_rmv(sentence):
+        return ''.join([character for character in sentence if not character.isdigit()])
+    
+    def numbers_remover(self):
+        self.serie = self.serie.apply(self.nb_rmv)
+        return self
 
     @staticmethod
     def cln_whtspcs(sentence):
@@ -27,4 +35,31 @@ class TextPreprocessing:
 
     def clean_whitespaces(self):
         self.serie = self.serie.apply(self.cln_whtspcs)
+        return self
+
+class TextPreprocessingDataFrame:
+    def __init__(self, dataframe):
+        self.dataframe = dataframe
+
+    def lower(self):
+        self.dataframe = self.dataframe.applymap(str.lower, na_action="ignore")
+        return self
+    
+    @staticmethod
+    def nb_rmv(sentence):
+        return ''.join([character for character in sentence if not character.isdigit()])
+    
+    def numbers_remover(self):
+        self.dataframe = self.dataframe.applymap(self.nb_rmv, na_action="ignore")
+        return self
+
+    @staticmethod
+    def cln_whtspcs(sentence):
+        if sentence is None:
+            return None
+        else:
+            return " ".join(str(sentence).split())
+
+    def clean_whitespaces(self):
+        self.dataframe = self.dataframe.applymap(self.cln_whtspcs, na_action="ignore")
         return self
